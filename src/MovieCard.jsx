@@ -1,6 +1,12 @@
 
 import React from 'react';
 
+/**
+ * Renders a movie card component with the provided movie data.
+ *
+ * @param {Object} props - The props object containing the movie data.
+ * @return {JSX.Element} The rendered movie card component.
+ */
 const MovieCard = ({ movie: { imdbID, Year, Poster, Title, Type } }) => {
   return (
     <div className="movie" key={imdbID}>
