@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import axios from "axios";
 import MovieCard from "./MovieCard";
 // import SearchIcon from "./search.svg";
 import "./App.css";
@@ -15,10 +15,19 @@ const App = () => {
     }, []);
 
     const searchMovies = async (title) => {
-        const response = await fetch(`${API_URL}&s=${title}`);
-        const data = await response.json();
+        // const response = await fetch(`${API_URL}&s=${title}`);
+        // const data = await response.json();
 
-        setMovies(data.Search);
+        const response = await axios.get(`${API_URL}`, {
+            params: {
+                s: title
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        setMovies(response.data.Search);
     };
 
     return (
@@ -42,8 +51,8 @@ const App = () => {
             {/* Display the Movies */}
             {movies?.length > 0 ? (
                 <div className="container">
-                    {movies.map((movie) => (
-                        <MovieCard movie={movie} />
+                    {movies.map((movie, index) => (
+                        <MovieCard key={index} movie={movie} />
                     ))}
                 </div>
             ) : (
